@@ -79,6 +79,7 @@ class GoPiggy(pigo.Pigo):
 
     def cha_cha_slide(self):
         print('cha cha slide')
+        for x in range(3):
             self.encL(30)
             time.sleep(1)
             self.bwd(2)
