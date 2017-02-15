@@ -1,4 +1,4 @@
-  import pigo
+import pigo
 import time
 import random
 
