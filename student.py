@@ -84,15 +84,15 @@ class GoPiggy(pigo.Pigo):
             time.sleep(1)
             self.encB(30)
             time.sleep(1)
-            self.servo(20)
-            self.servo(20)
+            self.servo(45)
+            self.servo(45)
             self.encL(30)
             self.encR(30)
 
     def freestyle(self):
         print('Freestyle!')
         for x in range(3):
-            self.servo(30)
+            self.servo(45)
             self.encR(30)
             self.servo(140)
             time.sleep(1)
