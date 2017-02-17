@@ -78,27 +78,28 @@ class GoPiggy(pigo.Pigo):
             self.encL(3)
 
     def cha_cha_slide(self):
-        print('cha cha slide')
+        print('Cha Cha Slide')
         for x in range(3):
             self.encL(30)
             time.sleep(1)
             self.encB(30)
             time.sleep(1)
-            self.servo(2)
-            self.servo(2)
+            self.servo(20)
+            self.servo(20)
             self.encL(30)
             self.encR(30)
 
     def freestyle(self):
+        print('Freestyle!')
         for x in range(3):
             self.servo(30)
-            self.encR(3)
+            self.encR(30)
             self.servo(140)
             time.sleep(1)
-            self.encL(3)
+            self.encL(30)
             self.encF(30)
-            self.encB(15)
-            self.encR(25)
+            self.encB(30)
+            self.encR(30)
 
 
 
