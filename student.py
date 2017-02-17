@@ -111,6 +111,11 @@ class GoPiggy(pigo.Pigo):
             self.encB(30)
             self.servo(360)
 
+    def head_shake(self):
+        for x in range(2):
+            self.servo(30)
+            self.servo(150)
+        self.servo(self.MIDPOINT)
 
     ########################
     ### MAIN LOGIC LOOP - the core algorithm of my navigation
