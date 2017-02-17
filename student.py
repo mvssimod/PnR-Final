@@ -82,7 +82,7 @@ class GoPiggy(pigo.Pigo):
         for x in range(3):
             self.encL(30)
             time.sleep(1)
-            self.encB(2)
+            self.encB(30)
             time.sleep(1)
             self.servo(2)
             self.servo(2)
