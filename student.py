@@ -104,7 +104,7 @@ class GoPiggy(pigo.Pigo):
             self.encR(30)
 
     def moonwalk(self):
-        print 'Now for a lil moonwalk'
+        print 'Now for a lil moonwalk *DAB*'
         for x in range(2):
             self.encB(40)
             self.servo(360)
