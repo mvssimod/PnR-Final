@@ -101,6 +101,12 @@ class GoPiggy(pigo.Pigo):
             self.encB(30)
             self.encR(30)
 
+    def moonwalk(self):
+        print 'Now for a lil moonwalk'
+            self.encB(40)
+            self.servo(60)
+            self.encB(40)
+            self.servo(60)
 
 
     ########################
