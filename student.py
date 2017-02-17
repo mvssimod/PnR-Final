@@ -67,7 +67,7 @@ class GoPiggy(pigo.Pigo):
         self.cha_cha_slide()
         self.freestyle()
         self.moonwalk()
-        # self.chacha()
+        self.head_shake()
         # self.sprinkler()
         # self.back_it_up()
 
