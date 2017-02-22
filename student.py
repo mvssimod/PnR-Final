@@ -61,7 +61,7 @@ class GoPiggy(pigo.Pigo):
         menu.get(ans, [None, error])[1]()
 
     def sweep(self):
-        for x in range(20, 160, 2):
+        for x in range(self.MIDPOINT - 60, self.MIDPOINT + 60, 2):
           self.servo(x)
           if self.dist() < 30:
             print("AHHHHHH")
@@ -113,8 +113,10 @@ class GoPiggy(pigo.Pigo):
             self.encR(30)
 
     def moonwalk(self):
-        print 'Now for a lil moonwalk *DAB*'
-        for x in range(4):
+        print 'Now for a lil moonwalk'
+        for x in range(2):
+            self.encB(30)
+            self.servo(160)
             self.encB(30)
             self.servo(160)
 
