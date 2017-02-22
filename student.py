@@ -63,9 +63,9 @@ class GoPiggy(pigo.Pigo):
     def sweep(self):
         for x in range(20, 160, 2):
           self.servo(x)
-            if self.dist() < 30:
-             print("AHHHHHH")
-             break
+          if self.dist() < 30:
+            print("AHHHHHH")
+            break
 
 
     #YOU DECIDE: How does your GoPiggy dance?
