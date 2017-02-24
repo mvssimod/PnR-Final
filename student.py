@@ -48,7 +48,7 @@ class GoPiggy(pigo.Pigo):
         menu = {"n": ("Navigate forward", self.nav),
                 "d": ("Dance", self.dance),
                 "c": ("Calibrate", self.calibrate),
-                "w": ("Sweep", self.sweep),
+                "t": ("Turn test", self.turn_test),
                 "s": ("Check status", self.status),
                 "q": ("Quit", quit)
                 }
@@ -60,26 +60,26 @@ class GoPiggy(pigo.Pigo):
         # activate the item selected
         menu.get(ans, [None, error])[1]()
 
-    def sweep(self):
-        for x in range(self.MIDPOINT - 60, self.MIDPOINT + 60, 2):
-            self.servo(x)
-            self.scan[x] = self.dist()
-        print("Here's what I saw")
-        print(self.scan)
-        print("Here's how I usually print this:")
-        for x in self.scan:
-            print(x)
+    def turn_test(self):
+        while True:
+            ans = raw_input('Turn right, left or stop? (r/l/s): ')
+            if ans == 'r':
+                val = int(raw_input('/nBy how much?: '))
+                self.encR(val)
+            elif ans == 'l':
+                val = int(raw_input('/nBy how much?: '))
+                self.encL(val)
+            else:
+                break
+        self.restore_heading()
 
-    def safety_dance(self):
-        for y in range(3):
-            for x in range(self.MIDPOINT - 60, self.MIDPOINT + 60, 2):
-              self.servo(x)
-              if self.dist() < 30:
-                print("AHHHHHH")
-                return
-            self.encR(6)
-        self.dance()
-
+    def restore_heading(self):
+        print ("Now I'll turn back to the starting position")
+            if self.turn_track > 0
+                self.encL(self.turn_track)
+            elif self.turn_track < 0
+                self.encR(abs(self.turn_track))
+        # assignment: make self.turn_track go back to zero
 
     #YOU DECIDE: How does your GoPiggy dance?
     def dance(self):
@@ -150,6 +150,13 @@ class GoPiggy(pigo.Pigo):
         print("-----------! NAVIGATION ACTIVATED !------------\n")
         # this is the loop part of the "main logic loop"
 
+    def enrR(self, enc):
+        pigo.Pigo.encR(self, enc)
+        self.turn_track += enc
+
+    def encL(self, enc):
+        pigo.Pigo.encL(self, enc)
+        self.turn_track -= enc
 
 
 
