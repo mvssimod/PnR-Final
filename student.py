@@ -92,6 +92,13 @@ class GoPiggy(pigo.Pigo):
         print ('Total number of obstacles in this scan: ' + str(counter))
         return counter
 
+    def total_obstacles(self):
+        counter = 0
+        for x in range(4):
+            counter += self.count_obstacles()
+            self.encR(7)
+        print('Total number of obstacles in this scan: ' + str(counter))
+
     def turn_test(self):
         while True:
             ans = raw_input('Turn right, left or stop? (r/l/s): ')
