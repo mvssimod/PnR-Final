@@ -133,7 +133,7 @@ class GoPiggy(pigo.Pigo):
         # self.back_it_up()
 
     def shimmy(self):
-        print('shimmy')
+        print('Shimmy')
         for x in range(3):
             self.servo(30)
             self.encR(3)
@@ -165,7 +165,7 @@ class GoPiggy(pigo.Pigo):
             self.encR(30)
 
     def moonwalk(self):
-        print 'Now for a lil moonwalk'
+        print('Now for a little moonwalk')
         for x in range(2):
             self.encB(30)
             self.servo(160)
@@ -188,6 +188,22 @@ class GoPiggy(pigo.Pigo):
         print("[ Press CTRL + C to stop me, then run stop.py ]\n")
         print("-----------! NAVIGATION ACTIVATED !------------\n")
         # this is the loop part of the "main logic loop"
+        while True:
+            if self.is_clear():
+                self.cruise()  # NEED TO CREATE THIS
+            answer = self.choose_path()
+            if answer == "left"
+                self.encL(6)
+            elif answer == "right"
+                self.encR(6)
+
+    def cruise(self):
+        print("Cruise Control")
+        self.fwd()
+        while self.is_clear():
+            time.sleep(0.1)
+        self.stop()
+        self.encB(3)
 
     def enrR(self, enc):
         pigo.Pigo.encR(self, enc)

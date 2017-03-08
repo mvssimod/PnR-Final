@@ -76,6 +76,13 @@ class Pigo(object):
     def nav(self):
         print("Parent nav")
 
+    def cruise(self):
+        self.fwd()
+        while self.is_clear():
+            time.sleep(0.1)
+        self.stop()
+        self.encB(3)
+
 
     ##DANCING IS FOR THE CHILD CLASS
     def dance(self):
@@ -91,6 +98,9 @@ class Pigo(object):
         self.LEFT_SPEED = left
         self.RIGHT_SPEED = right
         print('Left speed set to: '+str(left)+' // Right set to: '+str(right))
+
+    def fwd(self):
+        fwd()
     
     def encF(self, enc):
         print('Moving '+str((enc/18))+' rotation(s) forward')
