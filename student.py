@@ -192,9 +192,9 @@ class GoPiggy(pigo.Pigo):
             if self.is_clear():
                 self.cruise()  # NEED TO CREATE THIS
             answer = self.choose_path()
-            if answer == "left"
+            if answer == "left":
                 self.encL(6)
-            elif answer == "right"
+            elif answer == "right":
                 self.encR(6)
 
     def cruise(self):
