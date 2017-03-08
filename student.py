@@ -186,11 +186,10 @@ class GoPiggy(pigo.Pigo):
     def nav(self):
         print("-----------! NAVIGATION ACTIVATED !------------\n")
         print("[ Press CTRL + C to stop me, then run stop.py ]\n")
-        print("-----------! NAVIGATION ACTIVATED !------------\n")
         # this is the loop part of the "main logic loop"
         while True:
-            if self.is_clear():
-                self.cruise()  # NEED TO CREATE THIS
+            if self.is_clear(): # DANGEROUS CHECK! TOO SLOW!
+                self.cruise()  # NEED TO CREATE THIS!
             answer = self.choose_path()
             if answer == "left":
                 self.encL(6)
@@ -204,6 +203,10 @@ class GoPiggy(pigo.Pigo):
             time.sleep(0.1)
         self.stop()
         self.encB(3)
+
+    def is_clear(self):
+        self.count_obstacles()
+        self.total_obstacles()
 
     def enrR(self, enc):
         pigo.Pigo.encR(self, enc)
