@@ -188,7 +188,7 @@ class GoPiggy(pigo.Pigo):
         # if loop fails, it will check for other paths
         # main app loop
         while True:
-            if self.isClear():
+            if self.is_clear():
                 self.cruise()
                 # robot will cruise for a while until it sees something
             if us_dist(15) < 7:
@@ -196,13 +196,13 @@ class GoPiggy(pigo.Pigo):
                 # then it will back up and check for a new path
                 self.encB(5)
             # trying to get robot to choose a new path if it cannot go forward
-            answer = self.choosePath()
+            answer = self.choose_path()
             # if the path is clear to the left, it will turn 45 degrees
             if answer == "left":
-                self.turnL(45)
+                self.encL(45)
             # if the path is clear to the right and not left, it will go right
             elif answer == "right":
-                self.turnR(45)
+                self.encR(45)
                 ## how many degrees do we actually want to turn ?
 
     def cruise(self):
