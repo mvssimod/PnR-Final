@@ -178,43 +178,6 @@ class GoPiggy(pigo.Pigo):
             self.servo(150)
         self.servo(self.MIDPOINT)
 
-    ########################
-    ### MAIN LOGIC LOOP - the core algorithm of my navigation
-    ### (kind of a big deal)
-    ########################
-
-    def nav(self):
-        print("-----------! NAVIGATION ACTIVATED !------------\n")
-        print("[ Press CTRL + C to stop me, then run stop.py ]\n")
-        # this is the loop part of the "main logic loop"
-        while True:
-            if self.is_clear(): # DANGEROUS CHECK! TOO SLOW!
-                self.cruise()  # NEED TO CREATE THIS!
-            answer = self.choose_path()
-            if answer == "left":
-                self.encL(6)
-            elif answer == "right":
-                self.encR(6)
-
-    def cruise(self):
-        print("Cruise Control")
-        self.fwd()
-        while self.is_clear():
-            time.sleep(0.1)
-        self.stop()
-        self.encB(3)
-
-    def is_clear(self):
-        self.count_obstacles()
-        self.total_obstacles()
-
-    def enrR(self, enc):
-        pigo.Pigo.encR(self, enc)
-        self.turn_track += enc
-
-    def encL(self, enc):
-        pigo.Pigo.encL(self, enc)
-        self.turn_track -= enc
 
         ##################################################################################################################
 
