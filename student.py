@@ -181,83 +181,83 @@ class GoPiggy(pigo.Pigo):
 
         ##################################################################################################################
 
-        # AUTONOMOUS DRIVING
-        # central logic loop of my navigation
-        def nav(self):
-            print("Piggy nav")
-            # if loop fails, it will check for other paths
-            # main app loop
-            while True:
-                if self.isClear():
-                    self.cruise()
-                    # robot will cruise for a while until it sees something
-                if us_dist(15) < 7:
-                    # when it stops it will check to see if something is up in its face
-                    # then it will back up and check for a new path
-                    self.encB(5)
-                # trying to get robot to choose a new path if it cannot go forward
-                answer = self.choosePath()
-                # if the path is clear to the left, it will turn 45 degrees
-                if answer == "left":
-                    self.turnL(45)
-                # if the path is clear to the right and not left, it will go right
-                elif answer == "right":
-                    self.turnR(45)
-                    ## how many degrees do we actually want to turn ?
+    # AUTONOMOUS DRIVING
+    # central logic loop of my navigation
+    def nav(self):
+        print("Piggy nav")
+        # if loop fails, it will check for other paths
+        # main app loop
+        while True:
+            if self.isClear():
+                self.cruise()
+                # robot will cruise for a while until it sees something
+            if us_dist(15) < 7:
+                # when it stops it will check to see if something is up in its face
+                # then it will back up and check for a new path
+                self.encB(5)
+            # trying to get robot to choose a new path if it cannot go forward
+            answer = self.choosePath()
+            # if the path is clear to the left, it will turn 45 degrees
+            if answer == "left":
+                self.turnL(45)
+            # if the path is clear to the right and not left, it will go right
+            elif answer == "right":
+                self.turnR(45)
+                ## how many degrees do we actually want to turn ?
 
-        def cruise(self):
-            # cruise method, tells it to go forward until something is in front of it
-            servo(self.MIDPOINT)
-            time.sleep(.1)
-            fwd()
+    def cruise(self):
+        # cruise method, tells it to go forward until something is in front of it
+        servo(self.MIDPOINT)
+        time.sleep(.1)
+        fwd()
+        while True:
+            if us_dist(15) < self.STOP_DIST:
+                break
+            time.sleep(.05)
+        self.stop()
+
+        ###################################################################################################################
+
+    # this code helps me to calibrate motor speed,
+    # tells me if it was driving straight
+    def calibrate(self):
+        print("Calibrating...")
+        servo(self.MIDPOINT)
+        response = input("Am I looking straight ahead? (y/n): ")
+        if response == 'n':
+            # will ask what we want to do, turn r, l, or done?
             while True:
-                if us_dist(15) < self.STOP_DIST:
+                response = input("Turn right, left, or am I done? (r/l/d): ")
+                if response == "r":
+                    self.MIDPOINT += 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    servo(self.MIDPOINT)
+                    time.sleep(.01)
+                elif response == "l":
+                    self.MIDPOINT -= 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    servo(self.MIDPOINT)
+                    time.sleep(.01)
+                else:
+                    print("Midpoint now saved to: " + str(self.MIDPOINT))
                     break
-                time.sleep(.05)
-            self.stop()
+        response = input("Do you want to check if I'm driving straight? (y/n)")
+        if response == 'y':
 
-            ###################################################################################################################
+            while True:
+                set_left_speed(self.LEFT_SPEED)
+                set_right_speed(self.RIGHT_SPEED)
+                print("Left: " + str(self.LEFT_SPEED) + "//  Right: " + str(self.RIGHT_SPEED))
+                self.encF(19)
+                response = input("Reduce left, reduce right or done? (l/r/d): ")
+                if response == 'l':
+                    self.LEFT_SPEED -= 10
+                elif response == 'r':
+                    self.RIGHT_SPEED -= 10
+                elif response == 'd':
+                    break
 
-        # this code helps me to calibrate motor speed,
-        # tells me if it was driving straight
-        def calibrate(self):
-            print("Calibrating...")
-            servo(self.MIDPOINT)
-            response = input("Am I looking straight ahead? (y/n): ")
-            if response == 'n':
-                # will ask what we want to do, turn r, l, or done?
-                while True:
-                    response = input("Turn right, left, or am I done? (r/l/d): ")
-                    if response == "r":
-                        self.MIDPOINT += 1
-                        print("Midpoint: " + str(self.MIDPOINT))
-                        servo(self.MIDPOINT)
-                        time.sleep(.01)
-                    elif response == "l":
-                        self.MIDPOINT -= 1
-                        print("Midpoint: " + str(self.MIDPOINT))
-                        servo(self.MIDPOINT)
-                        time.sleep(.01)
-                    else:
-                        print("Midpoint now saved to: " + str(self.MIDPOINT))
-                        break
-            response = input("Do you want to check if I'm driving straight? (y/n)")
-            if response == 'y':
-
-                while True:
-                    set_left_speed(self.LEFT_SPEED)
-                    set_right_speed(self.RIGHT_SPEED)
-                    print("Left: " + str(self.LEFT_SPEED) + "//  Right: " + str(self.RIGHT_SPEED))
-                    self.encF(19)
-                    response = input("Reduce left, reduce right or done? (l/r/d): ")
-                    if response == 'l':
-                        self.LEFT_SPEED -= 10
-                    elif response == 'r':
-                        self.RIGHT_SPEED -= 10
-                    elif response == 'd':
-                        break
-
-                        ##################################################################################################################
+                    ##################################################################################################################
 
 
 
