@@ -35,6 +35,14 @@ class GoPiggy(pigo.Pigo):
             self.stop()
             self.menu()
 
+    def encR(self, enc):
+        pigo.Pigo.encR(self, enc)
+        self.turn_track += enc
+
+    def encL(self, enc):
+        pigo.Pigo.encL(self, enc)
+        self.turn_track -= enc
+
 
     ########################
     ### CLASS METHODS - these are the actions that your object can run
@@ -260,13 +268,6 @@ class GoPiggy(pigo.Pigo):
                 elif response == 'd':
                     break
 
-    def encR(self, enc):
-        pigo.Pigo.encR(self, enc)
-        self.turn_track += enc
-
-    def encL(self, enc):
-        pigo.Pigo.encL(self, enc)
-        self.turn_track -= enc
                     ##################################################################################################################
 
 
