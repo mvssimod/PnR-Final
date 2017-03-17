@@ -1,6 +1,8 @@
 import pigo
 import time
 import random
+from gopigo import *
+
 
 '''
 MR. A's Final Project Student Helper
@@ -207,7 +209,6 @@ class GoPiggy(pigo.Pigo):
 
     def cruise(self):
         # cruise method, tells it to go forward until something is in front of it
-        servo(self.MIDPOINT)
         time.sleep(.1)
         fwd()
         while True:
