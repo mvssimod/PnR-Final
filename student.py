@@ -209,10 +209,10 @@ class GoPiggy(pigo.Pigo):
             answer = self.choose_path()
             # if the path is clear to the left, it will turn 45 degrees
             if answer == "left":
-                self.encL(45)
+                self.encL(8)
             # if the path is clear to the right and not left, it will go right
             elif answer == "right":
-                self.encR(45)
+                self.encR(8)
                 ## how many degrees do we actually want to turn ?
 
     def cruise(self):
