@@ -226,14 +226,16 @@ class GoPiggy(pigo.Pigo):
         servo(self.MIDPOINT)
         response = input("Am I looking straight ahead? (y/n): ")
         if response == 'n':
-            # will ask what we want to do, turn r, l, or done?
+            # Will ask what we want to do, turn r, l, or done?
             while True:
                 response = input("Turn right, left, or am I done? (r/l/d): ")
+                # If we want to turn right...
                 if response == "r":
                     self.MIDPOINT += 1
                     print("Midpoint: " + str(self.MIDPOINT))
                     servo(self.MIDPOINT)
                     time.sleep(.01)
+                # If we want to turn left...
                 elif response == "l":
                     self.MIDPOINT -= 1
                     print("Midpoint: " + str(self.MIDPOINT))
@@ -258,6 +260,13 @@ class GoPiggy(pigo.Pigo):
                 elif response == 'd':
                     break
 
+    def encR(self, enc):
+        pigo.Pigo.encR(self, enc)
+        self.turn_track += enc
+
+    def encL(self, enc):
+        pigo.Pigo.encL(self, enc)
+        self.turn_track -= enc
                     ##################################################################################################################
 
 
