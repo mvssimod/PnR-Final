@@ -200,7 +200,7 @@ class GoPiggy(pigo.Pigo):
         while True:
             if self.is_clear():
                 self.cruise()
-                self.encB(5)
+                self.encB(7)
             # trying to get robot to choose a new path if it cannot go forward
             answer = self.choose_path()
             # if the path is clear to the left, it will turn 45 degrees
