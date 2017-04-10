@@ -201,7 +201,7 @@ class GoPiggy(pigo.Pigo):
             if self.is_clear():
                 self.cruise()
                 # robot will cruise for a while until it sees something
-            if us_dist(15) < 7:
+            if us_dist(10) < 5:
                 # when it stops it will check to see if something is up in its face
                 # then it will back up and check for a new path
                 self.encB(5)
@@ -213,7 +213,7 @@ class GoPiggy(pigo.Pigo):
             # if the path is clear to the right and not left, it will go right
             elif answer == "right":
                 self.encR(8)
-                ## how many degrees do we actually want to turn ?
+                # how many degrees do we actually want to turn?
 
     def cruise(self):
         # cruise method, tells it to go forward until something is in front of it
