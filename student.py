@@ -266,7 +266,7 @@ class GoPiggy(pigo.Pigo):
             # return
                     return
         # look straight ahead again
-                self.servo(self.MIDPOINT)
+                    self.servo(self.MIDPOINT)
         # I have turned left and need to check my right side
 
 
