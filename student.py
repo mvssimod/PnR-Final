@@ -61,9 +61,9 @@ class GoPiggy(pigo.Pigo):
                 "t": ("Turn test", self.turn_test),
                 "s": ("Check status", self.status),
                 "q": ("Quit", quit),
-                "w": ("Wide scan", self.wide_scan)
-                "a": ("Anthony's code", self.monitelloa_code)
-                "g": ("Grace's code", self.dipierrog_code)
+                "w": ("Wide scan", self.wide_scan),
+                "a": ("Anthony's code", self.monitelloa_code),
+                "g": ("Grace's code", self.dipierrog_code),
                 }
         # loop and print the menu...
         for key in sorted(menu.keys()):
