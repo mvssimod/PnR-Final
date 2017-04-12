@@ -191,19 +191,21 @@ class GoPiggy(pigo.Pigo):
 
         ##################################################################################################################
 
-        def final(self):
-            print("-----------! NAVIGATION ACTIVATED !------------\n")
-            print("[ Press CTRL + C to stop me, then run stop.py ]\n")
-            print("-----------! NAVIGATION ACTIVATED !------------\n")
-            # this is the loop part of the "main logic loop"
-            while True:
-                if self.is_clear():
-                    self.cruise()
-                answer = self.choose_path()
-                if answer == "left":
-                    self.encL(6)
-                elif answer == "right":
-                    self.encR(6)
+    # AUTONOMOUS DRIVING
+    # central logic loop of my navigation
+    def final(self):
+        print("-----------! NAVIGATION ACTIVATED !------------\n")
+        print("[ Press CTRL + C to stop me, then run stop.py ]\n")
+        print("-----------! NAVIGATION ACTIVATED !------------\n")
+        # this is the loop part of the "main logic loop"
+        while True:
+            if self.is_clear():
+                self.cruise()
+            answer = self.choose_path()
+            if answer == "left":
+                self.encL(6)
+            elif answer == "right":
+                self.encR(6)
 
     def cruise(self):
         self.fwd()  # I added this to pigo
@@ -230,28 +232,69 @@ class GoPiggy(pigo.Pigo):
             self.servo(self.MIDPOINT)
             # I have turned left and need to check my right side
 
-    def encR(self, enc):
-        pigo.Pigo.encR(self, enc)
-        self.turn_track += enc
 
-    def encL(self, enc):
-        pigo.Pigo.encL(self, enc)
-        self.turn_track -= enc
+        ###################################################################################################################
 
-    ####################################################
-    ############### STATIC FUNCTIONS
+    # this code helps me to calibrate motor speed,
+    # tells me if it was driving straight
+    def calibrate(self):
+        print("Calibrating...")
+        servo(self.MIDPOINT)
+        response = input("Am I looking straight ahead? (y/n): ")
+        if response == 'n':
+            # Will ask what we want to do, turn r, l, or done?
+            while True:
+                response = input("Turn right, left, or am I done? (r/l/d): ")
+                # If we want to turn right...
+                if response == "r":
+                    self.MIDPOINT += 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    servo(self.MIDPOINT)
+                    time.sleep(.01)
+                # If we want to turn left...
+                elif response == "l":
+                    self.MIDPOINT -= 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    servo(self.MIDPOINT)
+                    time.sleep(.01)
+                else:
+                    print("Midpoint now saved to: " + str(self.MIDPOINT))
+                    break
+        response = input("Do you want to check if I'm driving straight? (y/n)")
+        if response == 'y':
 
-    def error():
-        print('Error in input')
+            while True:
+                set_left_speed(self.LEFT_SPEED)
+                set_right_speed(self.RIGHT_SPEED)
+                print("Left: " + str(self.LEFT_SPEED) + "//  Right: " + str(self.RIGHT_SPEED))
+                self.encF(19)
+                response = input("Reduce left, reduce right or done? (l/r/d): ")
+                if response == 'l':
+                    self.LEFT_SPEED -= 10
+                elif response == 'r':
+                    self.RIGHT_SPEED -= 10
+                elif response == 'd':
+                    break
 
-    def quit():
-        raise SystemExit
+                    ##################################################################################################################
 
-    ##################################################################
-    ######## The app starts right here when we instantiate our GoPiggy
 
-    try:
-        g = GoPiggy()
-    except (KeyboardInterrupt, SystemExit):
-        from gopigo import *
-        stop()
+
+####################################################
+############### STATIC FUNCTIONS
+
+def error():
+    print('Error in input')
+
+
+def quit():
+    raise SystemExit
+
+##################################################################
+######## The app starts right here when we instantiate our GoPiggy
+
+try:
+    g = GoPiggy()
+except (KeyboardInterrupt, SystemExit):
+    from gopigo import *
+    stop()
