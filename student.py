@@ -62,6 +62,8 @@ class GoPiggy(pigo.Pigo):
                 "s": ("Check status", self.status),
                 "q": ("Quit", quit),
                 "w": ("Wide scan", self.wide_scan)
+                "a": ("Anthony's code", self.monitelloa_code)
+                "g": ("Grace's code", self.dipierrog_code)
                 }
         # loop and print the menu...
         for key in sorted(menu.keys()):
@@ -193,44 +195,131 @@ class GoPiggy(pigo.Pigo):
 
     # AUTONOMOUS DRIVING
     # central logic loop of my navigation
-    def final(self):
-        print("-----------! NAVIGATION ACTIVATED !------------\n")
-        print("[ Press CTRL + C to stop me, then run stop.py ]\n")
-        print("-----------! NAVIGATION ACTIVATED !------------\n")
-        # this is the loop part of the "main logic loop"
-        while True:
-            if self.is_clear():
-                self.cruise()
-            answer = self.choose_path()
-            if answer == "left":
-                self.encL(6)
-            elif answer == "right":
-                self.encR(6)
 
-    def cruise(self):
-        self.encF()
-        while self.is_clear():
+    # Grace's code
+    def dipierrog_code(self):
+        def nav(self):
+            print("Piggy nav")
+            # if loop fails, it will check for other paths
+            # main app loop
+            while True:
+                if self.is_clear():
+                    self.cruise()
+                    self.encB(7)
+            # trying to get robot to choose a new path if it cannot go forward
+                answer = self.choose_path()
+            # if the path is clear to the left, it will turn 45 degrees
+                if answer == "left":
+                    self.encL(8)
+            # if the path is clear to the right and not left, it will go right
+                elif answer == "right":
+                    self.encR(8)
+                # how many degrees do we actually want to turn?
+
+        def cruise(self):
+        # cruise method, tells it to go forward until something is in front of it
             time.sleep(.1)
-        self.stop()
-        self.encB(3)
+                fwd()
+            while True:
+                if us_dist(15) < self.STOP_DIST:
+                    break
+                time.sleep(.05)
+            self.stop()
 
-    def maneuver(self):
-        # I have turned right and need to check my left side
-        if self.turn_track > 0:
+    # Anthony's code
+    def monitelloa_code(self):
+        def final(self):
+            print("-----------! NAVIGATION ACTIVATED !------------\n")
+            print("[ Press CTRL + C to stop me, then run stop.py ]\n")
+            print("-----------! NAVIGATION ACTIVATED !------------\n")
+    # this is the loop part of the "main logic loop"
+            while True:
+                if self.is_clear():
+                    self.cruise()
+                answer = self.choose_path()
+                if answer == "left":
+                    self.encL(6)
+                elif answer == "right":
+                    self.encR(6)
+
+
+        def cruise(self):
+            self.fwd()  # I added this to pigo
             while self.is_clear():
-                # go forward a little bit
-                self.encF(5)
-            # look left
-            self.servo(self.MIDPOINT + 60)
-            # see if it's above self.STOP_DIST + 20
+                time.sleep(.1)
+            self.stop()
+            self.encB(3)
+
+
+        def maneuver(self):
+    # I have turned right and need to check my left side
+            if self.turn_track > 0:
+                while self.is_clear():
+            # go forward a little bit
+                    self.encF(5)
+        # look left
+                self.servo(self.MIDPOINT + 60)
+        # see if it's above self.STOP_DIST + 20
             if self.dist() > self.STOP_DIST + 20:
-                # restore_heading
-                self.restore_heading()
-                # return
-                return
-            # look straight ahead again
-            self.servo(self.MIDPOINT)
-            # I have turned left and need to check my right side
+            # restore_heading
+                    self.restore_heading()
+            # return
+                    return
+        # look straight ahead again
+                self.servo(self.MIDPOINT)
+        # I have turned left and need to check my right side
+
+
+        def encR(self, enc):
+            pigo.Pigo.encR(self, enc)
+            self.turn_track += enc
+
+
+        def encL(self, enc):
+            pigo.Pigo.encL(self, enc)
+            self.turn_track -= enc
+        ###################################################################################################################
+
+    # this code helps me to calibrate motor speed,
+    # tells me if it was driving straight
+    def calibrate(self):
+        print("Calibrating...")
+        servo(self.MIDPOINT)
+        response = input("Am I looking straight ahead? (y/n): ")
+        if response == 'n':
+            # Will ask what we want to do, turn r, l, or done?
+            while True:
+                response = input("Turn right, left, or am I done? (r/l/d): ")
+                # If we want to turn right...
+                if response == "r":
+                    self.MIDPOINT += 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    servo(self.MIDPOINT)
+                    time.sleep(.01)
+                # If we want to turn left...
+                elif response == "l":
+                    self.MIDPOINT -= 1
+                    print("Midpoint: " + str(self.MIDPOINT))
+                    servo(self.MIDPOINT)
+                    time.sleep(.01)
+                else:
+                    print("Midpoint now saved to: " + str(self.MIDPOINT))
+                    break
+        response = input("Do you want to check if I'm driving straight? (y/n)")
+        if response == 'y':
+
+            while True:
+                set_left_speed(self.LEFT_SPEED)
+                set_right_speed(self.RIGHT_SPEED)
+                print("Left: " + str(self.LEFT_SPEED) + "//  Right: " + str(self.RIGHT_SPEED))
+                self.encF(19)
+                response = input("Reduce left, reduce right or done? (l/r/d): ")
+                if response == 'l':
+                    self.LEFT_SPEED -= 10
+                elif response == 'r':
+                    self.RIGHT_SPEED -= 10
+                elif response == 'd':
+                    break
 
                     ##################################################################################################################
 
