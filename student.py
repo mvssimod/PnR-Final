@@ -232,50 +232,6 @@ class GoPiggy(pigo.Pigo):
             self.servo(self.MIDPOINT)
             # I have turned left and need to check my right side
 
-
-        ###################################################################################################################
-
-    # this code helps me to calibrate motor speed,
-    # tells me if it was driving straight
-    def calibrate(self):
-        print("Calibrating...")
-        servo(self.MIDPOINT)
-        response = input("Am I looking straight ahead? (y/n): ")
-        if response == 'n':
-            # Will ask what we want to do, turn r, l, or done?
-            while True:
-                response = input("Turn right, left, or am I done? (r/l/d): ")
-                # If we want to turn right...
-                if response == "r":
-                    self.MIDPOINT += 1
-                    print("Midpoint: " + str(self.MIDPOINT))
-                    servo(self.MIDPOINT)
-                    time.sleep(.01)
-                # If we want to turn left...
-                elif response == "l":
-                    self.MIDPOINT -= 1
-                    print("Midpoint: " + str(self.MIDPOINT))
-                    servo(self.MIDPOINT)
-                    time.sleep(.01)
-                else:
-                    print("Midpoint now saved to: " + str(self.MIDPOINT))
-                    break
-        response = input("Do you want to check if I'm driving straight? (y/n)")
-        if response == 'y':
-
-            while True:
-                set_left_speed(self.LEFT_SPEED)
-                set_right_speed(self.RIGHT_SPEED)
-                print("Left: " + str(self.LEFT_SPEED) + "//  Right: " + str(self.RIGHT_SPEED))
-                self.encF(19)
-                response = input("Reduce left, reduce right or done? (l/r/d): ")
-                if response == 'l':
-                    self.LEFT_SPEED -= 10
-                elif response == 'r':
-                    self.RIGHT_SPEED -= 10
-                elif response == 'd':
-                    break
-
                     ##################################################################################################################
 
 
