@@ -219,7 +219,7 @@ class GoPiggy(pigo.Pigo):
         def cruise(self):
         # cruise method, tells it to go forward until something is in front of it
             time.sleep(.1)
-                fwd()
+            fwd()
             while True:
                 if us_dist(15) < self.STOP_DIST:
                     break
