@@ -249,9 +249,9 @@ class GoPiggy(pigo.Pigo):
             if self.turn_track > 0:
                 while self.is_clear():
                 # go forward a little bit
-                self.encF(5)
+                    self.encF(5)
                 # look left
-                self.servo(self.MIDPOINT + 60)
+                    self.servo(self.MIDPOINT + 60)
                 # see if it's above self.STOP_DIST + 20
             if self.dist() > self.STOP_DIST + 20:
                 # restore_heading
