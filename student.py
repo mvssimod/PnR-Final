@@ -196,79 +196,79 @@ class GoPiggy(pigo.Pigo):
         # central logic loop of my navigation
 
         # Grace's code
-        def dipierrog_code(self):
-            print("Grace's nav")
-            # if loop fails, it will check for other paths
-            # main app loop
-            while True:
-                if self.is_clear():
-                    self.gcruise()
-                    self.encB(7)
-                    # trying to get robot to choose a new path if it cannot go forward
-                answer = self.choose_path()
-                # if the path is clear to the left, it will turn 45 degrees
-                if answer == "left":
-                    self.encL(8)
-                    # if the path is clear to the right and not left, it will go right
-                elif answer == "right":
-                    self.encR(8)
-                    # how many degrees do we actually want to turn?
+    def dipierrog_code(self):
+        print("Grace's nav")
+        # if loop fails, it will check for other paths
+        # main app loop
+        while True:
+            if self.is_clear():
+                self.gcruise()
+                self.encB(7)
+                # trying to get robot to choose a new path if it cannot go forward
+            answer = self.choose_path()
+            # if the path is clear to the left, it will turn 45 degrees
+            if answer == "left":
+                self.encL(8)
+                # if the path is clear to the right and not left, it will go right
+            elif answer == "right":
+                self.encR(8)
+                # how many degrees do we actually want to turn?
 
-        # Anthony's code
-        def monitelloa_code(self):
-            print("-----------! ANTHONY ACTIVATED !------------\n")
-            print("[ Press CTRL + C to stop me, then run stop.py ]\n")
-            print("-----------! NAVIGATION ACTIVATED !------------\n")
-            # this is the loop part of the "main logic loop"
-            while True:
-                if self.is_clear():
-                    self.acruise()
-                answer = self.choose_path()
-                if answer == "left":
-                    self.encL(6)
-                elif answer == "right":
-                    self.encR(6)
+    # Anthony's code
+    def monitelloa_code(self):
+        print("-----------! ANTHONY ACTIVATED !------------\n")
+        print("[ Press CTRL + C to stop me, then run stop.py ]\n")
+        print("-----------! NAVIGATION ACTIVATED !------------\n")
+        # this is the loop part of the "main logic loop"
+        while True:
+            if self.is_clear():
+                self.acruise()
+            answer = self.choose_path()
+            if answer == "left":
+                self.encL(6)
+            elif answer == "right":
+                self.encR(6)
 
-        def gcruise(self):
-            self.servo(self.MIDPOINT)
-            self.fwd()  # I added this to pigo
-            while self.dist() > self.STOP_DIST:
-                time.sleep(.05)
-            self.stop()
-            self.encB(3)
+    def gcruise(self):
+        self.servo(self.MIDPOINT)
+        self.fwd()  # I added this to pigo
+        while self.dist() > self.STOP_DIST:
+            time.sleep(.05)
+        self.stop()
+        self.encB(3)
 
-        def acruise(self):
-            self.fwd()  # I added this to pigo
+    def acruise(self):
+        self.fwd()  # I added this to pigo
+        while self.is_clear():
+            time.sleep(.1)
+        self.stop()
+        self.encB(3)
+
+    def maneuver(self):
+        # I have turned right and need to check my left side
+        if self.turn_track > 0:
             while self.is_clear():
-                time.sleep(.1)
-            self.stop()
-            self.encB(3)
+            # go forward a little bit
+                self.encF(5)
+            # look left
+                self.servo(self.MIDPOINT + 60)
+            # see if it's above self.STOP_DIST + 20
+        if self.dist() > self.STOP_DIST + 20:
+            # restore_heading
+            self.restore_heading()
+            # return
+            return
+        # look straight ahead again
+        self.servo(self.MIDPOINT)
+        # I have turned left and need to check my right side
 
-        def maneuver(self):
-            # I have turned right and need to check my left side
-            if self.turn_track > 0:
-                while self.is_clear():
-                # go forward a little bit
-                    self.encF(5)
-                # look left
-                    self.servo(self.MIDPOINT + 60)
-                # see if it's above self.STOP_DIST + 20
-            if self.dist() > self.STOP_DIST + 20:
-                # restore_heading
-                self.restore_heading()
-                # return
-                return
-            # look straight ahead again
-            self.servo(self.MIDPOINT)
-            # I have turned left and need to check my right side
+    def encR(self, enc):
+        pigo.Pigo.encR(self, enc)
+        self.turn_track += enc
 
-        def encR(self, enc):
-            pigo.Pigo.encR(self, enc)
-            self.turn_track += enc
-
-        def encL(self, enc):
-            pigo.Pigo.encL(self, enc)
-            self.turn_track -= enc
+    def encL(self, enc):
+        pigo.Pigo.encL(self, enc)
+        self.turn_track -= enc
             ###################################################################################################################
 
     # this code helps me to calibrate motor speed,
