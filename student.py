@@ -192,14 +192,15 @@ class GoPiggy(pigo.Pigo):
 
         ##################################################################################################################
 
-        # AUTONOMOUS DRIVING
-        # central logic loop of my navigation
+        # Auto-Drive
+        # Code for Robot
 
         # Grace's code
     def dipierrog_code(self):
-        print("Grace's nav")
+        print("-----------! GRACE'S CODE ACTIVATED !------------\n")
+        print("[ Press CTRL + C to stop me, then run stop.py ]\n")
+        print("-----------! NAVIGATION ACTIVATED !------------\n")
         # if loop fails, it will check for other paths
-        # main app loop
         while True:
             if self.is_clear():
                 self.gcruise()
@@ -212,14 +213,12 @@ class GoPiggy(pigo.Pigo):
                 # if the path is clear to the right and not left, it will go right
             elif answer == "right":
                 self.encR(8)
-                # how many degrees do we actually want to turn?
 
     # Anthony's code
     def monitelloa_code(self):
-        print("-----------! ANTHONY ACTIVATED !------------\n")
+        print("-----------! ANTHONY'S CODE ACTIVATED !------------\n")
         print("[ Press CTRL + C to stop me, then run stop.py ]\n")
         print("-----------! NAVIGATION ACTIVATED !------------\n")
-        # this is the loop part of the "main logic loop"
         while True:
             if self.is_clear():
                 self.acruise()
@@ -238,7 +237,8 @@ class GoPiggy(pigo.Pigo):
         self.encB(3)
 
     def acruise(self):
-        self.fwd()  # I added this to pigo
+        self.fwd()
+        # If the coast is clear, the robot will move forward
         while self.is_clear():
             time.sleep(.1)
         self.stop()
@@ -248,17 +248,17 @@ class GoPiggy(pigo.Pigo):
         # I have turned right and need to check my left side
         if self.turn_track > 0:
             while self.is_clear():
-            # go forward a little bit
+            # Go forward
                 self.encF(5)
-            # look left
+            # Look left
                 self.servo(self.MIDPOINT + 60)
             # see if it's above self.STOP_DIST + 20
         if self.dist() > self.STOP_DIST + 20:
-            # restore_heading
+            # Restore_heading
             self.restore_heading()
-            # return
+            # Return
             return
-        # look straight ahead again
+        # Look straight ahead again
         self.servo(self.MIDPOINT)
         # I have turned left and need to check my right side
 
