@@ -248,22 +248,21 @@ class GoPiggy(pigo.Pigo):
         self.encB(3)
 
     def maneuver(self):
-        # I have turned right and need to check my left side
+        print("My turn_track is: " + str(self.turn_track))
         if self.turn_track > 0:
+            # If the path is clear, move forward
             while self.is_clear():
-            # Go forward
                 self.encF(8)
-            # Look left
-                self.servo(self.MIDPOINT + 25)
-            # see if it's above self.STOP_DIST + 20
-        if self.dist() > self.STOP_DIST + 20:
-            # Restore_heading
-            self.restore_heading()
-            # Return
-            return
-        # Look straight ahead again
-        self.servo(self.MIDPOINT)
-        # I have turned left and need to check my right side
+            # Scan for obstacles along the path
+            self.servo(self.MIDPOINT + 25)
+            # If distance from obstacle is greater than the stop distance + 20, stop
+            if self.dist() > self.STOP_DIST + 20:
+                time.sleep(.1)
+                self.restore_heading()
+                # return
+                return
+            # Scan for obstacles before moving again
+            self.servo(self.MIDPOINT)
 
     def encR(self, enc):
         pigo.Pigo.encR(self, enc)
