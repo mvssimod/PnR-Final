@@ -261,7 +261,7 @@ class GoPiggy(pigo.Pigo):
                 self.restore_heading()
                 # return
                 return
-            # Scan for obstacles before moving again
+            # Scan for obstacles before moving
             self.servo(self.MIDPOINT)
 
     def encR(self, enc):
