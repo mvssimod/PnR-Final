@@ -20,7 +20,7 @@ class GoPiggy(pigo.Pigo):
         # Our servo turns the sensor. What angle of the servo( ) method sets it straight?
         self.MIDPOINT = 90
         # YOU DECIDE: How close can an object get (cm) before we have to stop?
-        self.STOP_DIST = 40
+        self.STOP_DIST = 45
         # YOU DECIDE: What left motor power helps straighten your fwd()?
         self.LEFT_SPEED = 90
         # YOU DECIDE: What left motor power helps straighten your fwd()?
@@ -200,17 +200,17 @@ class GoPiggy(pigo.Pigo):
         print("-----------! GRACE'S CODE ACTIVATED !------------\n")
         print("[ Press CTRL + C to stop me, then run stop.py ]\n")
         print("-----------! NAVIGATION ACTIVATED !------------\n")
-        # if loop fails, it will check for other paths
+        # If loop fails, it will check for other paths
         while True:
             if self.is_clear():
                 self.gcruise()
                 self.encB(7)
-                # trying to get robot to choose a new path if it cannot go forward
+            # Trying to get robot to choose a new path if it cannot go forward
             answer = self.choose_path()
-            # if the path is clear to the left, it will turn 45 degrees
+            # If the path is clear to the left, it will turn left
             if answer == "left":
                 self.encL(8)
-                # if the path is clear to the right and not left, it will go right
+            # If the path is clear to the right, it will turn right
             elif answer == "right":
                 self.encR(8)
 
@@ -223,6 +223,7 @@ class GoPiggy(pigo.Pigo):
             if self.is_clear():
                 self.acruise()
             answer = self.choose_path()
+            # If path is clear, the robots will begin moving forward
             if answer == "left":
                 self.encL(6)
             elif answer == "right":
@@ -241,7 +242,9 @@ class GoPiggy(pigo.Pigo):
         # If the coast is clear, the robot will move forward
         while self.is_clear():
             time.sleep(.1)
+        # If an obstacle is detected, stop
         self.stop()
+        # Move backwards
         self.encB(3)
 
     def maneuver(self):
