@@ -254,7 +254,7 @@ class GoPiggy(pigo.Pigo):
             # Go forward
                 self.encF(5)
             # Look left
-                self.servo(self.MIDPOINT + 60)
+                self.servo(self.MIDPOINT + 25)
             # see if it's above self.STOP_DIST + 20
         if self.dist() > self.STOP_DIST + 20:
             # Restore_heading
