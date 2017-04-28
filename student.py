@@ -252,7 +252,7 @@ class GoPiggy(pigo.Pigo):
         if self.turn_track > 0:
             while self.is_clear():
             # Go forward
-                self.encF(5)
+                self.encF(8)
             # Look left
                 self.servo(self.MIDPOINT + 25)
             # see if it's above self.STOP_DIST + 20
