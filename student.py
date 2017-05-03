@@ -205,7 +205,7 @@ class GoPiggy(pigo.Pigo):
             if self.is_clear():
                 self.gcruise()
                 self.encB(7)
-            # Trying to get robot to choose a new path if it cannot go forward
+            # The robot will choose a new path if it cannot go forward
             answer = self.choose_path()
             # If the path is clear to the left, it will turn left
             if answer == "left":
@@ -220,12 +220,14 @@ class GoPiggy(pigo.Pigo):
         print("[ Press CTRL + C to stop me, then run stop.py ]\n")
         print("-----------! NAVIGATION ACTIVATED !------------\n")
         while True:
+            # If the path is clear in front, move forward
             if self.is_clear():
                 self.acruise()
             answer = self.choose_path()
-            # If path is clear, the robots will begin moving forward
+            # If the path is clear to the left, it will turn left
             if answer == "left":
                 self.encL(6)
+                # If the path is clear to the right, it will turn right
             elif answer == "right":
                 self.encR(6)
 
